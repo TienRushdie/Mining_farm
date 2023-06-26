@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Camera_Player : MonoBehaviour
 {
@@ -14,23 +15,24 @@ public class Camera_Player : MonoBehaviour
     [SerializeField] private string URLL = "http://localhost/mining_farm_db/rating.php";
     [SerializeField] private string URLLL = "http://localhost/mining_farm_db/profile.php?user_Nick=";
     public string[,] top10=new string[5,3];
+    playerController playerController;
     public Text[] rating=new Text[18];
     public Text[] profile_info = new Text[7];
     void Start()
     {
         Panel.SetActive(false);
-        
         ProfilePanel.SetActive(false);
         IsPanelActive = false;
         ShopPanel.SetActive(false);
         URLLL += PlayerPrefs.GetString("NickName");
-        Load_Profile_Info();
+        Invoke("Load_Profile_Info", 2f);
 
     }
 
     
     void Update()
-    { 
+    {
+        if (Input.GetKeyUp(KeyCode.Escape)) { ProfilePanel.SetActive(false); ShopPanel.SetActive(false); }
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -60,6 +62,10 @@ public class Camera_Player : MonoBehaviour
                 ShopPanel.SetActive(true);
                 
 
+            }
+            if (hit.transform.tag == "clone")
+            {
+                SceneManager.LoadScene(2);
             }
 
 
@@ -91,8 +97,9 @@ public class Camera_Player : MonoBehaviour
         profile_info[6].text= PlayerPrefs.GetInt("t3c").ToString(); 
 
     }
-   
-   
+    
+
+
     IEnumerator Load_Rating()
     {
         int g = 0;

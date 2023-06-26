@@ -111,7 +111,7 @@ public class playerController : MonoBehaviour
         }
     }
     public void savingProgress(int t1c,int t2c, int t3c)
-    {
+    { 
         PlayerPrefs.SetString("NickName", nicktext.text);
         PlayerPrefs.SetFloat("Balance",Money);
         PlayerPrefs.SetInt("t1c", t1c);
@@ -150,7 +150,7 @@ public class playerController : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
-    private void UpdateBalance()
+  public void UpdateBalance()
     {
         WWWForm form = new WWWForm();
         form.AddField("nick", nicktext.text);
